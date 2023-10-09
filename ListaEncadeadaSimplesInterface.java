@@ -1,8 +1,8 @@
-public interface LinkedListInterface {
+public interface LinkedListInterface<TipoGenerico> {
 
-    void append(Nodo dado); /* insere um elemento no final da lista */
+    void append(TipoGenerico dado); /* insere um elemento no final da lista */
 
-    void insert(int index, Nodo dado); /* insere um elemento na posição especificada por index */
+    void insert(int index, TipoGenerico dado); /* insere um elemento na posição especificada por index */
 
     void remove(int index); /* remove um elemento na posição especificada por index */
 
@@ -10,9 +10,9 @@ public interface LinkedListInterface {
 
     boolean isEmpty(); /* @return boolean: a lista está vazia? */
 
-    Nodo get(int index); /* @return Nodo: objeto Nodo na posição especificada por index */
+    TipoGenerico get(int index); /* @return TipoGenerico: objeto Nodo na posição especificada por index */
 
-    boolean contains(Nodo data); /* @return boolean: o nodo T existe dentro da lista? */
+    boolean contains(TipoGenerico data); /* @return boolean: o nodo data existe dentro da lista? */
 
     String toString(); /* @return String: representação textual da lista */
 
