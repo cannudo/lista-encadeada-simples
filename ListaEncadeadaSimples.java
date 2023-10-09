@@ -19,6 +19,7 @@ public class ListaEncadeadaSimples<TipoGenerico> implements ListaEncadeadaSimple
             this.cauda.setProximoNodo(novoNodo);
             this.cauda = novoNodo;
         }
+        this.tamanho++;
     }
 
     public boolean estaForaDosLimites(int index) {
@@ -126,6 +127,12 @@ public class ListaEncadeadaSimples<TipoGenerico> implements ListaEncadeadaSimple
 
     public boolean isEmpty() {
         return this.cabeca == null;
+    }
+
+    public void status() {
+        System.out.println("ListaEncadeadaSimples: " + this.toString());
+        System.out.println("Tamanho: " + this.size());
+        System.out.println("Vazia? " + this.isEmpty());
     }
 
 }
