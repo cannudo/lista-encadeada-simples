@@ -1,6 +1,6 @@
 public interface NodoInterface<TipoGenerico> {
 
-    TipoGenerico getData(); /* @return TipoGenerico: objeto armazenado no nodo */ 
+    TipoGenerico obterDado(); /* @return TipoGenerico: objeto armazenado no nodo */ 
 
     void setData(TipoGenerico data); /* define o objeto armazenado no nodo */
 

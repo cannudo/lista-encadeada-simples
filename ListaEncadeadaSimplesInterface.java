@@ -1,4 +1,4 @@
-public interface LinkedListInterface<TipoGenerico> {
+public interface ListaEncadeadaSimplesInterface<TipoGenerico> {
 
     void append(TipoGenerico dado); /* insere um elemento no final da lista */
 
