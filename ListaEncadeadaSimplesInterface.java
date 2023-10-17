@@ -10,7 +10,7 @@ public interface ListaEncadeadaSimplesInterface<TipoGenerico> {
 
     boolean isEmpty(); /* @return boolean: a lista está vazia? */
 
-    TipoGenerico get(int index); /* @return TipoGenerico: objeto Nodo na posição especificada por index */
+    Nodo get(int index); /* @return TipoGenerico: objeto Nodo na posição especificada por index */
 
     boolean contains(TipoGenerico data); /* @return boolean: o nodo data existe dentro da lista? */
 

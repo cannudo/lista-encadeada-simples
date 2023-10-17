@@ -1,12 +1,13 @@
 class Main {
     public static void main(String[] args) {
-        ListaEncadeadaSimples<Integer> lista = new ListaEncadeadaSimples<Integer>();
-        lista.append(1);
-        lista.append(2);
-        lista.append(3);
-        lista.append(4);
-        lista.append(5);
-        lista.insert(0, 10);
+        ListaEncadeadaSimples<String> lista = new ListaEncadeadaSimples<String>();
+        lista.append("LAX");
+        lista.append("MSP");
+        lista.append("ATL");
+        lista.append("BOS");
+        Nodo<String> cauda = new Nodo<String>(null);
+        cauda = lista.get(3);
+        System.out.println(cauda.obterProximoNodo() + "\n");
         lista.status();
     }
 }

@@ -79,7 +79,7 @@ public class ListaEncadeadaSimples<TipoGenerico> implements ListaEncadeadaSimple
         return this.tamanho;
     }
 
-    public TipoGenerico get(int index) {
+    public Nodo get(int index) {
         if(estaForaDosLimites(index)) {
             throw new IndexOutOfBoundsException("estaForaDosLimites(int index): parâmetro index fora dos limites.");
         }
@@ -88,7 +88,7 @@ public class ListaEncadeadaSimples<TipoGenerico> implements ListaEncadeadaSimple
         for (int i = 0; i < index; i++) {
             nodoAtual = nodoAtual.obterProximoNodo();
         }
-        return nodoAtual.obterDado();
+        return nodoAtual;
     }
 
     public boolean contains(TipoGenerico data) {
@@ -132,6 +132,8 @@ public class ListaEncadeadaSimples<TipoGenerico> implements ListaEncadeadaSimple
     public void status() {
         System.out.println("ListaEncadeadaSimples: " + this.toString());
         System.out.println("Tamanho: " + this.size());
+        System.out.println("Cabeça: " + this.cabeca.obterDado());
+        System.out.println("Cauda: " + this.cauda.obterDado());
         System.out.println("Vazia? " + this.isEmpty());
     }
 
