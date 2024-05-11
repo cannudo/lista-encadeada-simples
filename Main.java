@@ -1,13 +1,12 @@
 class Main {
     public static void main(String[] args) {
-        ListaEncadeadaSimples<String> lista = new ListaEncadeadaSimples<String>();
-        lista.append("LAX");
-        lista.append("MSP");
-        lista.append("ATL");
-        lista.append("BOS");
-        Nodo<String> cauda = new Nodo<String>(null);
-        cauda = lista.get(3);
-        System.out.println(cauda.obterProximoNodo() + "\n");
-        lista.status();
+        Nodo<String> novoNo = new Nodo("O primeiro a entrar (this)");
+        Nodo<String> proximoNo = new Nodo("deve ser o primeiro a sair.");
+        novoNo.setProximoNodo(proximoNo);
+
+        /* Beleza. Mas setProximoNodo() deve ser chamado dentro de ListaEncadeadaSimples() */
+
+        ListaEncadeadaSimples<String> lista = new ListaEncadeadaSimples<String>(novoNo);
+        System.out.println();
     }
 }
