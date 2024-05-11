@@ -1,12 +1,9 @@
 class Main {
     public static void main(String[] args) {
-        Nodo<String> novoNo = new Nodo("O primeiro a entrar (this)");
-        Nodo<String> proximoNo = new Nodo("deve ser o primeiro a sair.");
-        novoNo.setProximoNodo(proximoNo);
-
-        /* Beleza. Mas setProximoNodo() deve ser chamado dentro de ListaEncadeadaSimples() */
-
-        ListaEncadeadaSimples<String> lista = new ListaEncadeadaSimples<String>(novoNo);
+        ListaEncadeadaSimples<String> lista = new ListaEncadeadaSimples<String>();
+        lista.adicionarNovoNodo("O primeiro a entrar (this)");
+        lista.adicionarNovoNodo("deve ser o primeiro a sair.");
+        lista.adicionarNovoNodo("Este nó deve ser a cauda, e será o último a sair.");
         System.out.println();
     }
 }
