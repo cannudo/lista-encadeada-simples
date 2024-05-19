@@ -23,6 +23,12 @@ public class ListaEncadeadaSimples<TipoGenerico> {
         return this.cauda;
     }
 
+    public void limparLista() {
+        this.cabeca = null;
+        this.cauda = null;
+        this.tamanho = 0;
+    }
+
     public void setCauda(Nodo<TipoGenerico> nodo) {
         boolean pode = this.esteNodoPodeSerCauda(nodo);
         if(pode) {
@@ -81,6 +87,33 @@ public class ListaEncadeadaSimples<TipoGenerico> {
         this.incrementarTamanho();
     }
 
+    public Nodo<TipoGenerico> buscarCauda() {
+        Nodo<TipoGenerico> nodoAtual = this.cabeca;
+        while(nodoAtual.getProximoNodo() != null) {
+            nodoAtual = nodoAtual.getProximoNodo();
+        }
+        return nodoAtual;
+    }
+
+    public void removerCauda() {
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("removerCauda(): a lista está vazia!");
+        } else {
+            boolean aListaPossuiApenasUmNodo = this.tamanho == 1;
+            if(aListaPossuiApenasUmNodo) {
+                this.limparLista();
+            } else {
+                Nodo<TipoGenerico> nodoAtual = this.cabeca;
+                while(nodoAtual.getProximoNodo() != this.cauda) {
+                    nodoAtual = nodoAtual.getProximoNodo();
+                }
+                nodoAtual.setProximoNodo(null);
+                this.setCauda(nodoAtual);
+            }
+            
+        }
+    }
+
     public void status() {
         System.out.println("--- início do estado atual da lista ---\n");
 
@@ -111,31 +144,5 @@ public class ListaEncadeadaSimples<TipoGenerico> {
         fragmento.append(nodoAtual.toString());
         fragmento.append(" ]");
         return fragmento.toString();
-    }
-
-    public void removerNodo() {
-        /* Os testes da minha cabeça aguardam um cannudo do futuro.
-         * :gnu:
-         * 
-         * [VOLTAR À MESA DO DEBUG DA PRÓXIMA VEZ QUE ESTA FUNÇÃO FOR INVOCADA]
-         */
-        Nodo<TipoGenerico> cabeca = this.cabeca;
-        Nodo<TipoGenerico> nodoAtual = this.cabeca;
-        Nodo<TipoGenerico> cauda = this.cauda;
-        Nodo<TipoGenerico> proximoNodo = nodoAtual.getProximoNodo();
-        int tamanho = this.tamanho;
-        boolean oProximoNodoEhCauda = false;
-        for(int i = 0; i < tamanho; i++) {
-            oProximoNodoEhCauda = proximoNodo == cauda;
-            if(oProximoNodoEhCauda) {
-                nodoAtual.setProximoNodo(null);
-                this.cauda = nodoAtual;
-                this.decrementarTamanho();
-                break;              
-            } else {
-                nodoAtual = nodoAtual.getProximoNodo();
-                proximoNodo = nodoAtual.getProximoNodo();
-            }
-        }
     }
 }

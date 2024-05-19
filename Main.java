@@ -14,11 +14,15 @@ class Main {
         /* OK */
 
         listaParaDemaisTestes.adicionarNovoNodo(1);
-        listaParaDemaisTestes.adicionarNovoNodo(2);
-        listaParaDemaisTestes.adicionarNovoNodo(3);
-        listaParaDemaisTestes.adicionarNovoNodo(4);
-        listaParaDemaisTestes.adicionarNovoNodo(5);
         listaParaDemaisTestes.status();
+        /* OK */
+        listaParaDemaisTestes.removerCauda();
+        listaParaDemaisTestes.status();
+        /* OK */
+
+        listaParaDemaisTestes.removerCauda();
+        /* OK */
+
         System.out.println();
     }
 }
