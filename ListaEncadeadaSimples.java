@@ -81,6 +81,38 @@ public class ListaEncadeadaSimples<TipoGenerico> {
         this.incrementarTamanho();
     }
 
+    public void status() {
+        System.out.println("--- início do estado atual da lista ---\n");
+
+        System.out.println("this.cabeca: " + this.cabeca);
+        System.out.println("this.cauda: " + this.cauda);
+        System.out.println("this.tamanho: " + this.tamanho);
+        System.out.println("this.estaVazia(): " + this.estaVazia());
+        System.out.println("\nthis.toString(): " + this.toString());
+
+        System.out.println("\n--- fim do estado atual da lista ---");
+    }
+
+    public String toString() {
+        boolean aListaEstaVazia = this.estaVazia();
+        
+        if(aListaEstaVazia) {
+            return "[]";
+        }
+
+        StringBuilder fragmento = new StringBuilder();
+        fragmento.append("[ ");
+        Nodo<TipoGenerico> nodoAtual = this.cabeca;
+        while(nodoAtual.getProximoNodo() != null) {
+            fragmento.append(nodoAtual.toString());
+            fragmento.append(", ");
+            nodoAtual = nodoAtual.getProximoNodo();
+        }
+        fragmento.append(nodoAtual.toString());
+        fragmento.append(" ]");
+        return fragmento.toString();
+    }
+
     public void removerNodo() {
         /* Os testes da minha cabeça aguardam um cannudo do futuro.
          * :gnu:
@@ -105,6 +137,5 @@ public class ListaEncadeadaSimples<TipoGenerico> {
                 proximoNodo = nodoAtual.getProximoNodo();
             }
         }
-        System.out.println();
     }
 }

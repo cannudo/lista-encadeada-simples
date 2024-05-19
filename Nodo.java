@@ -22,4 +22,12 @@ public class Nodo<TipoGenerico> {
     public void setProximoNodo(Nodo<TipoGenerico> proximoNodo) {
         this.proximoNodo = proximoNodo;
     }
+
+    public String toString() {
+        StringBuilder fragmento = new StringBuilder();
+        fragmento.append("<< ");
+        fragmento.append(this.dado);
+        fragmento.append(" >>");
+        return fragmento.toString();
+        }
 }
