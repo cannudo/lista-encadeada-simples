@@ -19,14 +19,22 @@ public class ListaEncadeadaSimples<TipoGenerico> {
         return this.cabeca;
     }
 
+    public void limparCabeca() {
+        this.cabeca = null;
+    }
+
     public Nodo<TipoGenerico> getCauda() {
         return this.cauda;
     }
 
-    public void limparLista() {
-        this.cabeca = null;
+    public void limparCauda() {
         this.cauda = null;
-        this.tamanho = 0;
+    }
+
+    public void limparLista() {
+        this.limparCabeca();
+        this.limparCauda();
+        this.zerarTamanho();
     }
 
     public void setCauda(Nodo<TipoGenerico> nodo) {
@@ -38,12 +46,18 @@ public class ListaEncadeadaSimples<TipoGenerico> {
         }
     }
 
+
+
     public void setCabeca(Nodo<TipoGenerico> nodo) {
         this.cabeca = nodo;
     }
 
     public void incrementarTamanho() {
         this.tamanho++;
+    }
+
+    public void zerarTamanho() {
+        this.tamanho = 0;
     }
 
     public void decrementarTamanho() {
@@ -56,6 +70,38 @@ public class ListaEncadeadaSimples<TipoGenerico> {
 
     public boolean esteNodoPodeSerCauda(Nodo<TipoGenerico> nodo) {
         return nodo.getProximoNodo() == null;
+    }
+
+    public void adicionarNovoNodoNaCabeca(Nodo<TipoGenerico> novoNodo) {
+        if(this.estaVazia()) {
+            boolean pode = this.esteNodoPodeSerCauda(novoNodo);
+            if(pode) {
+                this.setCabeca(novoNodo);
+                this.setCauda(novoNodo);
+            } else {
+                throw new EsteNodoNaoPodeSerCaudaException("adicionarNovoNodoNaCabeca(): `this.getProximoNodo()` deve ser null!");
+            }
+        } else {
+            Nodo<TipoGenerico> cabecaAntiga = this.getCabeca();
+            this.limparCabeca();
+            this.setCabeca(novoNodo);
+            novoNodo.setProximoNodo(cabecaAntiga);
+        }
+        this.incrementarTamanho();
+    }
+
+    public void adicionarNovoNodoNaCabeca(TipoGenerico dado) {
+        Nodo<TipoGenerico> novoNodo = new Nodo<TipoGenerico>(dado);
+        if(this.estaVazia()) {
+            this.setCabeca(novoNodo);
+            this.setCauda(novoNodo);
+        } else {
+            Nodo<TipoGenerico> cabecaAntiga = this.getCabeca();
+            this.limparCabeca();
+            this.setCabeca(novoNodo);
+            novoNodo.setProximoNodo(cabecaAntiga);
+        }
+        this.incrementarTamanho();
     }
 
     public void adicionarNovoNodo(TipoGenerico dado) {

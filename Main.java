@@ -3,6 +3,14 @@ import java.util.Scanner;
 class Main {
     public static void main(String[] args) {
         ListaEncadeadaSimples<String> lista = new ListaEncadeadaSimples<String>();
+        lista.adicionarNovoNodo("0");
+        lista.adicionarNovoNodo("1");
+        lista.adicionarNovoNodoNaCabeca("-1");
+        Nodo<String> nodo = new Nodo<String>("-2");
+        lista.adicionarNovoNodoNaCabeca(nodo);
+        lista.status();
+        System.out.println();
+        /* OK */
 
         Scanner leitor = new Scanner(System.in);
         int opcao = 99;
