@@ -1,4 +1,4 @@
-public class Nodo<TipoGenerico> implements NodoInterface<TipoGenerico> {
+public class Nodo<TipoGenerico> {
     private TipoGenerico dado;
     private Nodo<TipoGenerico> proximoNodo;
 
@@ -7,15 +7,15 @@ public class Nodo<TipoGenerico> implements NodoInterface<TipoGenerico> {
         this.proximoNodo = null;
     }
 
-    public TipoGenerico obterDado() {
+    public TipoGenerico getDado() {
         return dado;
     }
 
-    public void setData(TipoGenerico dado) {
+    public void setDado(TipoGenerico dado) {
         this.dado = dado;
     }
 
-    public Nodo<TipoGenerico> obterProximoNodo() {
+    public Nodo<TipoGenerico> getProximoNodo() {
         return proximoNodo;
     }
 
@@ -23,4 +23,11 @@ public class Nodo<TipoGenerico> implements NodoInterface<TipoGenerico> {
         this.proximoNodo = proximoNodo;
     }
 
+    public String toString() {
+        StringBuilder fragmento = new StringBuilder();
+        fragmento.append("<< ");
+        fragmento.append(this.dado);
+        fragmento.append(" >>");
+        return fragmento.toString();
+        }
 }

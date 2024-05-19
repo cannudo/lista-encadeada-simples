@@ -1,4 +1,4 @@
-public class ListaEncadeadaSimples<TipoGenerico> implements ListaEncadeadaSimplesInterface<TipoGenerico> {
+public class ListaEncadeadaSimples<TipoGenerico> {
     private Nodo<TipoGenerico> cabeca;
     private Nodo<TipoGenerico> cauda;
     private int tamanho;
@@ -9,130 +9,187 @@ public class ListaEncadeadaSimples<TipoGenerico> implements ListaEncadeadaSimple
         this.tamanho = 0;
     }
 
-
-    public void append(TipoGenerico dado) {
-        Nodo<TipoGenerico> novoNodo = new Nodo<TipoGenerico>(dado);
-        if (this.isEmpty()) {
-            this.cabeca = novoNodo;
-            this.cauda = novoNodo;
-        } else {
-            this.cauda.setProximoNodo(novoNodo);
-            this.cauda = novoNodo;
-        }
-        this.tamanho++;
+    public ListaEncadeadaSimples(Nodo<TipoGenerico> primeiroNodo) {
+        this.cabeca = primeiroNodo;
+        this.cauda = primeiroNodo;
+        this.tamanho = 1;
     }
 
-    public boolean estaForaDosLimites(int index) {
-            return index < 0 || index > this.tamanho;
+    public Nodo<TipoGenerico> getCabeca() {
+        return this.cabeca;
     }
 
-    public void insert(int index, TipoGenerico dado) {
-        if(estaForaDosLimites(index)) {
-            throw new IndexOutOfBoundsException("estaForaDosLimites(int index): parâmetro index fora dos limites.");
-        }
-
-        Nodo<TipoGenerico> novoNo = new Nodo<TipoGenerico>(dado);
-        if (index == 0) {
-            novoNo.setProximoNodo(this.cabeca);
-            this.cabeca = novoNo;
-            if (this.isEmpty()) {
-                this.cauda = novoNo;
-            }
-        } else if (index == this.tamanho) {
-            this.cauda.setProximoNodo(novoNo);
-            this.cauda = novoNo;
-        } else {
-            Nodo<TipoGenerico> nodoAnterior = this.cabeca;
-            for (int i = 0; i < index - 1; i++) {
-                nodoAnterior = nodoAnterior.obterProximoNodo();
-            }
-            novoNo.setProximoNodo(nodoAnterior.obterProximoNodo());
-            nodoAnterior.setProximoNodo(novoNo);           
-        }
-        this.tamanho++;
-    }
-
-    public void remove(int index) {
-        if(estaForaDosLimites(index)) {
-            throw new IndexOutOfBoundsException("estaForaDosLimites(int index): parâmetro index fora dos limites.");
-        }
-
-        if (index == 0) {
-            this.cabeca = this.cabeca.obterProximoNodo();
-            if (this.cabeca == null) {
-                this.cauda = null;
-            }
-        } else {
-            Nodo<TipoGenerico> nodoAnterior = this.cabeca;
-            for (int i = 0; i < index - 1; i++) {
-                nodoAnterior = nodoAnterior.obterProximoNodo();
-            }
-            nodoAnterior.setProximoNodo(nodoAnterior.obterProximoNodo().obterProximoNodo());
-            if (nodoAnterior.obterProximoNodo() == null) {
-                this.cauda = nodoAnterior;
-            }
-        }
-        this.tamanho--;
-    }
-
-    public int size() {
-        return this.tamanho;
-    }
-
-    public TipoGenerico get(int index) {
-        if(estaForaDosLimites(index)) {
-            throw new IndexOutOfBoundsException("estaForaDosLimites(int index): parâmetro index fora dos limites.");
-        }
-
-        Nodo<TipoGenerico> nodoAtual = this.cabeca;
-        for (int i = 0; i < index; i++) {
-            nodoAtual = nodoAtual.obterProximoNodo();
-        }
-        return nodoAtual.obterDado();
-    }
-
-    public boolean contains(TipoGenerico data) {
-        Nodo<TipoGenerico> nodoAtual = this.cabeca;
-        while (nodoAtual != null) {
-            if (nodoAtual.obterDado().equals(data)) {
-                return true;
-            }
-            nodoAtual = nodoAtual.obterProximoNodo();
-        }
-        return false;
-    }
-
-    public String toString() {
-        if (this.isEmpty()) {
-            return "[]";
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        Nodo<TipoGenerico> nodoAtual = this.cabeca;
-        while (nodoAtual.obterProximoNodo() != null) {
-            sb.append(nodoAtual.obterDado());
-            sb.append(", ");
-            nodoAtual = nodoAtual.obterProximoNodo();
-        }
-        sb.append(nodoAtual.obterDado());
-        sb.append("]");
-        return sb.toString();
-    }
-
-    public void clear() {
+    public void limparCabeca() {
         this.cabeca = null;
+    }
+
+    public Nodo<TipoGenerico> getCauda() {
+        return this.cauda;
+    }
+
+    public void limparCauda() {
         this.cauda = null;
+    }
+
+    public void limparLista() {
+        this.limparCabeca();
+        this.limparCauda();
+        this.zerarTamanho();
+    }
+
+    public void setCauda(Nodo<TipoGenerico> nodo) {
+        boolean pode = this.esteNodoPodeSerCauda(nodo);
+        if(pode) {
+            this.cauda = nodo;
+        } else {
+            throw new EsteNodoNaoPodeSerCaudaException("setCauda(): `this.getProximoNodo()` deve ser null!");
+        }
+    }
+
+
+
+    public void setCabeca(Nodo<TipoGenerico> nodo) {
+        this.cabeca = nodo;
+    }
+
+    public void incrementarTamanho() {
+        this.tamanho++;
+    }
+
+    public void zerarTamanho() {
         this.tamanho = 0;
     }
 
-    public boolean isEmpty() {
-        return this.cabeca == null;
+    public void decrementarTamanho() {
+        this.tamanho--;
+    }
+
+    public boolean estaVazia() {
+        return this.tamanho == 0;
+    }
+
+    public boolean esteNodoPodeSerCauda(Nodo<TipoGenerico> nodo) {
+        return nodo.getProximoNodo() == null;
+    }
+
+    public void adicionarNovoNodoNaCabeca(Nodo<TipoGenerico> novoNodo) {
+        if(this.estaVazia()) {
+            boolean pode = this.esteNodoPodeSerCauda(novoNodo);
+            if(pode) {
+                this.setCabeca(novoNodo);
+                this.setCauda(novoNodo);
+            } else {
+                throw new EsteNodoNaoPodeSerCaudaException("adicionarNovoNodoNaCabeca(): `this.getProximoNodo()` deve ser null!");
+            }
+        } else {
+            Nodo<TipoGenerico> cabecaAntiga = this.getCabeca();
+            this.limparCabeca();
+            this.setCabeca(novoNodo);
+            novoNodo.setProximoNodo(cabecaAntiga);
+        }
+        this.incrementarTamanho();
+    }
+
+    public void adicionarNovoNodoNaCabeca(TipoGenerico dado) {
+        Nodo<TipoGenerico> novoNodo = new Nodo<TipoGenerico>(dado);
+        if(this.estaVazia()) {
+            this.setCabeca(novoNodo);
+            this.setCauda(novoNodo);
+        } else {
+            Nodo<TipoGenerico> cabecaAntiga = this.getCabeca();
+            this.limparCabeca();
+            this.setCabeca(novoNodo);
+            novoNodo.setProximoNodo(cabecaAntiga);
+        }
+        this.incrementarTamanho();
+    }
+
+    public void adicionarNovoNodo(TipoGenerico dado) {
+        Nodo<TipoGenerico> novoNodo = new Nodo<TipoGenerico>(dado);
+        if(this.estaVazia()) {
+            this.setCabeca(novoNodo);
+            this.setCauda(novoNodo);
+        } else {
+            this.cauda.setProximoNodo(novoNodo);
+            this.setCauda(novoNodo);
+        }
+        this.incrementarTamanho();
+    }
+
+    public void adicionarNovoNodo(Nodo<TipoGenerico> novoNodo) {
+        if(this.estaVazia()) {
+            boolean pode = this.esteNodoPodeSerCauda(novoNodo);
+
+            if(pode) {
+            this.setCabeca(novoNodo);
+            this.setCauda(novoNodo);
+            } else {
+                throw new EsteNodoNaoPodeSerCaudaException("adicionarNovoNodo(): `this.getProximoNodo()` deve ser null!");
+            }
+        } else {
+            this.cauda.setProximoNodo(novoNodo);
+            this.setCauda(novoNodo);
+        }
+        this.incrementarTamanho();
+    }
+
+    public Nodo<TipoGenerico> buscarCauda() {
+        Nodo<TipoGenerico> nodoAtual = this.cabeca;
+        while(nodoAtual.getProximoNodo() != null) {
+            nodoAtual = nodoAtual.getProximoNodo();
+        }
+        return nodoAtual;
+    }
+
+    public void removerCauda() {
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("removerCauda(): a lista está vazia!");
+        } else {
+            boolean aListaPossuiApenasUmNodo = this.tamanho == 1;
+            if(aListaPossuiApenasUmNodo) {
+                this.limparLista();
+            } else {
+                Nodo<TipoGenerico> nodoAtual = this.cabeca;
+                while(nodoAtual.getProximoNodo() != this.cauda) {
+                    nodoAtual = nodoAtual.getProximoNodo();
+                }
+                nodoAtual.setProximoNodo(null);
+                this.setCauda(nodoAtual);
+                this.decrementarTamanho();
+            }
+            
+        }
     }
 
     public void status() {
-        System.out.println("ListaEncadeadaSimples: " + this.toString());
-        System.out.println("Tamanho: " + this.size());
-        System.out.println("Vazia? " + this.isEmpty());
+        System.out.println("--- início do estado atual da lista ---\n");
+
+        System.out.println("this.cabeca: " + this.cabeca);
+        System.out.println("this.cauda: " + this.cauda);
+        System.out.println("this.tamanho: " + this.tamanho);
+        System.out.println("this.estaVazia(): " + this.estaVazia());
+        System.out.println("\nthis.toString(): " + this.toString());
+
+        System.out.println("\n--- fim do estado atual da lista ---");
     }
 
+    public String toString() {
+        boolean aListaEstaVazia = this.estaVazia();
+        
+        if(aListaEstaVazia) {
+            return "[]";
+        }
+
+        StringBuilder fragmento = new StringBuilder();
+        fragmento.append("[ ");
+        Nodo<TipoGenerico> nodoAtual = this.cabeca;
+        while(nodoAtual.getProximoNodo() != null) {
+            fragmento.append(nodoAtual.toString());
+            fragmento.append(", ");
+            nodoAtual = nodoAtual.getProximoNodo();
+        }
+        fragmento.append(nodoAtual.toString());
+        fragmento.append(" ]");
+        return fragmento.toString();
+    }
 }
