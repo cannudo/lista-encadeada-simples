@@ -109,6 +109,7 @@ public class ListaEncadeadaSimples<TipoGenerico> {
                 }
                 nodoAtual.setProximoNodo(null);
                 this.setCauda(nodoAtual);
+                this.decrementarTamanho();
             }
             
         }
