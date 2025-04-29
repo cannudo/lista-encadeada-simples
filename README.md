@@ -1,0 +1,1 @@
+Implementação de lista simplesmente encadeada
