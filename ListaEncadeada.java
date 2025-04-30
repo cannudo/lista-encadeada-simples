@@ -83,12 +83,24 @@ public class ListaEncadeada<TipoGenerico> {
     }
 
     public static void main(String[] args) {
-        int opcao = 99;
+        int opcao = 0;
         String dado;
         
         Scanner leitor = new Scanner(System.in);
 
         ListaEncadeada<String> lista = new ListaEncadeada<>();
+        String[] alfabeto = {
+            "A", "B", "C", "D", "E", "F", "G",
+            "H", "I", "J", "K", "L", "M", "N",
+            "O", "P", "Q", "R", "S", "T", "U",
+            "V", "W", "X", "Y", "Z"
+        };
+        for (String letra : alfabeto) {
+            No<String> letraDoAlfabeto = new No<String>(letra);
+            lista.adicionarNo(letraDoAlfabeto);
+        }
+        System.out.println(lista.toString());
+
         while(opcao != 0) {
             System.out.println("\nMenu:");
             System.out.println("0 - Sair");
