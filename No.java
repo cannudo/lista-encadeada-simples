@@ -25,6 +25,17 @@ public class No<TipoGenerico> {
         this.proximoNo = novoNo;
     }
 
+    public String toString() {
+        String retorno;
+        retorno = this.getDado() + " ➞ ";
+        if(this.proximoNo == null) {
+            retorno += "∅";
+        } else {
+            retorno += this.getProximoNo().getDado();
+        }
+        return retorno;
+    }
+
     public static void main(String args[]) {
         int opcao = 99;
         String dado;

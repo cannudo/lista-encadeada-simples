@@ -66,6 +66,24 @@ public class ListaEncadeada<TipoGenerico> {
         this.incrementarTamanho();
     }
 
+    public boolean oIndiceEstaDentroDosLimites(int indice) {
+        return indice >= 0 && indice <= this.getTamanho() - 1;
+    }
+
+    public No<TipoGenerico> buscarNoNoIndice(int indice) {
+        if(this.oIndiceEstaDentroDosLimites(indice)) {
+            No<TipoGenerico> noAtual = this.cabeca;
+            for(int i = 0; i < indice; i++) {
+                if(noAtual.getProximoNo() != null) {
+                    noAtual = noAtual.getProximoNo();
+                }
+            }
+            return noAtual;
+        } else {
+            throw new OIndiceEstaForaDosLimitesException("O índice " + indice + " está fora dos limites da lista (0 à " + (this.getTamanho() - 1) + ").");
+        }
+    }
+
     public String toString() {
         String retorno = "{ ";
 
@@ -73,17 +91,16 @@ public class ListaEncadeada<TipoGenerico> {
             No<TipoGenerico> noAtual = this.cabeca;
 
             while(noAtual != null) {
-                retorno += noAtual.getDado() + " ➞ ";
+                retorno += noAtual.toString();
                 noAtual = noAtual.getProximoNo();
             }
         }
-        retorno += "∅";
         retorno += " }";
         return retorno;
     }
 
     public static void main(String[] args) {
-        int opcao = 0;
+        int indice, opcao = 99;
         String dado;
         
         Scanner leitor = new Scanner(System.in);
@@ -99,13 +116,13 @@ public class ListaEncadeada<TipoGenerico> {
             No<String> letraDoAlfabeto = new No<String>(letra);
             lista.adicionarNo(letraDoAlfabeto);
         }
-        System.out.println(lista.toString());
 
         while(opcao != 0) {
             System.out.println("\nMenu:");
             System.out.println("0 - Sair");
             System.out.println("1 - Listar nós");
             System.out.println("2 - Adicionar nó");
+            System.out.println("3 - Buscar nó pelo índice");
             System.out.print("--> ");
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -120,6 +137,17 @@ public class ListaEncadeada<TipoGenerico> {
                     dado = leitor.nextLine();
                     No<String> novoNo = new No<String>(dado);
                     lista.adicionarNo(novoNo);
+                    break;
+                case 3:
+                    System.out.print("Qual índice? ");
+                    indice = leitor.nextInt();
+                    leitor.nextLine();
+                    try {
+                        No<String> no = lista.buscarNoNoIndice(indice);
+                        System.out.println(no.toString());
+                    } catch (OIndiceEstaForaDosLimitesException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 default:
                     break;
