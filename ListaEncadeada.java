@@ -11,6 +11,12 @@ public class ListaEncadeada<TipoGenerico> {
         this.tamanho = 0;        
     }
 
+    public void zerarLista() {
+        this.setTamanho(0);
+        this.setCabeca(null);
+        this.setCauda(null);
+    }
+
     public No<TipoGenerico> getCabeca() {
         return this.cabeca;
     }
@@ -78,21 +84,48 @@ public class ListaEncadeada<TipoGenerico> {
         this.incrementarTamanho();
     }
 
-    public void removerUltimoNo() {
+    public No<TipoGenerico> removerNoNoIndice(int indice) {
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("Mulher, tá vazia essa lista");
+        }
+        if(!this.oIndiceEstaDentroDosLimites(indice)) {
+            throw new OIndiceEstaForaDosLimitesException("O índice " + indice + " está fora dos limites da lista (0 à " + (this.indiceDaCauda()) + ").");
+        }
+
+        No<TipoGenerico> candidatoARemocao = null;
+        No<TipoGenerico> novaCauda = null;
+        No<TipoGenerico> noAnterior = null;
+
+        if(this.temCauda() && this.indiceDaCauda() == 0 && indice == 0) {
+            candidatoARemocao = this.getCauda();
+            this.zerarLista();
+        } else {
+            candidatoARemocao = this.buscarNoNoIndice(indice);
+            noAnterior = this.buscarNoNoIndice(indice - 1);
+            novaCauda = candidatoARemocao.getProximoNo();
+            noAnterior.setProximoNo(novaCauda);
+            System.out.println("Debug");
+        }
+        return candidatoARemocao;
+    }
+
+    public No<TipoGenerico> removerUltimoNo() {
         if(this.estaVazia()) {
             throw new ListaVaziaException("Mulher, tá vazia essa lista");
         } else {
             No<TipoGenerico> novoNoCauda = null;
+            No<TipoGenerico> noRemovido = null;
             try {
                 novoNoCauda = this.buscarNoNoIndice(this.indiceDaCauda() - 1);
                 novoNoCauda.setProximoNo(null);
+                noRemovido = this.cauda;
                 this.setCauda(novoNoCauda);
                 this.decrementarTamanho();
             } catch (OIndiceEstaForaDosLimitesException e) {
-                this.decrementarTamanho();
-                this.setCabeca(null);
-                this.setCauda(null);
+                noRemovido = this.cauda;
+                this.zerarLista();
             }
+            return noRemovido;
         }
     }
 
@@ -186,7 +219,7 @@ public class ListaEncadeada<TipoGenerico> {
                     break;
                 case 4:
                     try {
-                        lista.removerUltimoNo();                        
+                        System.out.println("Nó removido: " + lista.removerUltimoNo());                        
                     } catch (ListaVaziaException e) {
                         System.err.println(e.getMessage());
                     }
