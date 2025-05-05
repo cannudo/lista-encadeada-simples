@@ -55,6 +55,18 @@ public class ListaEncadeada<TipoGenerico> {
         return !this.temCabeca() && !this.temCauda();
     }
 
+    public int indiceDaCauda() {
+        return this.getTamanho() - 1;
+    }
+
+    public boolean oNoEhCabeca(No<TipoGenerico> no) {
+        return no == this.cabeca;
+    }
+
+    public boolean oNoEhCauda(No<TipoGenerico> no) {
+        return no == this.cauda;
+    }
+
     public void adicionarNo(No<TipoGenerico> novoNo) {
         if(this.estaVazia()) {
             this.setCabeca(novoNo);
@@ -64,6 +76,24 @@ public class ListaEncadeada<TipoGenerico> {
             this.setCauda(novoNo);
         }
         this.incrementarTamanho();
+    }
+
+    public void removerUltimoNo() {
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("Mulher, tá vazia essa lista");
+        } else {
+            No<TipoGenerico> novoNoCauda = null;
+            try {
+                novoNoCauda = this.buscarNoNoIndice(this.indiceDaCauda() - 1);
+                novoNoCauda.setProximoNo(null);
+                this.setCauda(novoNoCauda);
+                this.decrementarTamanho();
+            } catch (OIndiceEstaForaDosLimitesException e) {
+                this.decrementarTamanho();
+                this.setCabeca(null);
+                this.setCauda(null);
+            }
+        }
     }
 
     public boolean oIndiceEstaDentroDosLimites(int indice) {
@@ -80,7 +110,7 @@ public class ListaEncadeada<TipoGenerico> {
             }
             return noAtual;
         } else {
-            throw new OIndiceEstaForaDosLimitesException("O índice " + indice + " está fora dos limites da lista (0 à " + (this.getTamanho() - 1) + ").");
+            throw new OIndiceEstaForaDosLimitesException("O índice " + indice + " está fora dos limites da lista (0 à " + (this.indiceDaCauda()) + ").");
         }
     }
 
@@ -89,9 +119,13 @@ public class ListaEncadeada<TipoGenerico> {
 
         if(!this.estaVazia()) {
             No<TipoGenerico> noAtual = this.cabeca;
-
+            
             while(noAtual != null) {
-                retorno += noAtual.toString();
+                if(!this.oNoEhCauda(noAtual)) {
+                    retorno += noAtual.toString() + " | ";                    
+                } else {
+                    retorno += noAtual.toString();
+                }
                 noAtual = noAtual.getProximoNo();
             }
         }
@@ -106,7 +140,7 @@ public class ListaEncadeada<TipoGenerico> {
         Scanner leitor = new Scanner(System.in);
 
         ListaEncadeada<String> lista = new ListaEncadeada<>();
-        String[] alfabeto = {
+/*        String[] alfabeto = {
             "A", "B", "C", "D", "E", "F", "G",
             "H", "I", "J", "K", "L", "M", "N",
             "O", "P", "Q", "R", "S", "T", "U",
@@ -116,13 +150,14 @@ public class ListaEncadeada<TipoGenerico> {
             No<String> letraDoAlfabeto = new No<String>(letra);
             lista.adicionarNo(letraDoAlfabeto);
         }
-
+*/
         while(opcao != 0) {
             System.out.println("\nMenu:");
             System.out.println("0 - Sair");
             System.out.println("1 - Listar nós");
             System.out.println("2 - Adicionar nó");
             System.out.println("3 - Buscar nó pelo índice");
+            System.out.println("4 - Remover último nó");
             System.out.print("--> ");
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -146,7 +181,14 @@ public class ListaEncadeada<TipoGenerico> {
                         No<String> no = lista.buscarNoNoIndice(indice);
                         System.out.println(no.toString());
                     } catch (OIndiceEstaForaDosLimitesException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
+                    }
+                    break;
+                case 4:
+                    try {
+                        lista.removerUltimoNo();                        
+                    } catch (ListaVaziaException e) {
+                        System.err.println(e.getMessage());
                     }
                     break;
                 default:
