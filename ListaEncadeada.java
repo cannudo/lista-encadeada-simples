@@ -84,6 +84,15 @@ public class ListaEncadeada<TipoGenerico> {
         this.incrementarTamanho();
     }
 
+    public void adicionarNoAoInicio(No<TipoGenerico> novaCabeca) {
+        novaCabeca.setProximoNo(this.getCabeca());
+        if(this.estaVazia()) {
+            this.setCauda(novaCabeca);
+        }
+        this.setCabeca(novaCabeca);
+        this.incrementarTamanho();
+    }
+
     public No<TipoGenerico> removerNoNoIndice(int indice) {
         /*
         Por enquanto, a implementação deste método não é necessária.
@@ -199,6 +208,7 @@ public class ListaEncadeada<TipoGenerico> {
             System.out.println("2 - Adicionar nó");
             System.out.println("3 - Buscar nó pelo índice");
             System.out.println("4 - Remover último nó");
+            System.out.println("5 - Adicionar nó ao início");
             System.out.print("--> ");
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -235,6 +245,12 @@ public class ListaEncadeada<TipoGenerico> {
                     } catch (ListaVaziaException e) {
                         System.err.println(e.getMessage());
                     }
+                    break;
+                case 5:
+                    System.out.print("Digite um dado string: ");
+                    dado = leitor.nextLine();
+                    No<String> novoNoGambiarra = new No<String>(dado);
+                    lista.adicionarNoAoInicio(novoNoGambiarra);
                     break;
                 default:
                     break;
