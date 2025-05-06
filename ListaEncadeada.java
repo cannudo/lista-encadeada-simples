@@ -85,6 +85,11 @@ public class ListaEncadeada<TipoGenerico> {
     }
 
     public No<TipoGenerico> removerNoNoIndice(int indice) {
+        /*
+        Por enquanto, a implementação deste método não é necessária.
+        Quando voltar, revisar a parte do commit e3e13d666946a17e47899f397d9b0410b222811f
+        que inclui a função zerarLista() (que parece gambiarra demais)
+        */
         if(this.estaVazia()) {
             throw new ListaVaziaException("Mulher, tá vazia essa lista");
         }
@@ -134,6 +139,9 @@ public class ListaEncadeada<TipoGenerico> {
     }
 
     public No<TipoGenerico> buscarNoNoIndice(int indice) {
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("Tá vazia essa lista, bixaa");
+        }
         if(this.oIndiceEstaDentroDosLimites(indice)) {
             No<TipoGenerico> noAtual = this.cabeca;
             for(int i = 0; i < indice; i++) {
@@ -155,7 +163,7 @@ public class ListaEncadeada<TipoGenerico> {
             
             while(noAtual != null) {
                 if(!this.oNoEhCauda(noAtual)) {
-                    retorno += noAtual.toString() + " | ";                    
+                    retorno += noAtual.toString() + " , ";                    
                 } else {
                     retorno += noAtual.toString();
                 }
@@ -207,6 +215,10 @@ public class ListaEncadeada<TipoGenerico> {
                     lista.adicionarNo(novoNo);
                     break;
                 case 3:
+                    if(lista.estaVazia()) {
+                        System.out.println("A lista tá vazia, bixa");
+                        break;
+                    }
                     System.out.print("Qual índice? ");
                     indice = leitor.nextInt();
                     leitor.nextLine();
