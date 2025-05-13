@@ -5,6 +5,10 @@ public class ListaEncadeada<TipoGenerico> {
     private No<TipoGenerico> cauda;
     private int tamanho;
 
+    public ListaEncadeada(No<TipoGenerico> primeiroNo) {
+        this.adicionarNoAoInicio(primeiroNo);
+    }
+
     public ListaEncadeada() {
         this.cabeca = null;
         this.cauda = null;
@@ -139,7 +143,7 @@ public class ListaEncadeada<TipoGenerico> {
                 noRemovido = this.cauda;
                 this.setCauda(novoNoCauda);
                 this.decrementarTamanho();
-            } catch (OIndiceEstaForaDosLimitesException e) {
+            } catch (OIndiceEstaForaDosLimitesException e) { /* Ele sempre vai cair aqui quando a lista só tiver um nó */
                 noRemovido = this.cauda;
                 this.zerarLista();
             }
@@ -165,7 +169,7 @@ public class ListaEncadeada<TipoGenerico> {
     }
 
     public boolean oIndiceEstaDentroDosLimites(int indice) {
-        return indice >= 0 && indice <= this.getTamanho() - 1;
+        return indice >= 0 && indice <= this.indiceDaCauda();
     }
 
     public No<TipoGenerico> buscarNoNoIndice(int indice) {
@@ -211,17 +215,7 @@ public class ListaEncadeada<TipoGenerico> {
         Scanner leitor = new Scanner(System.in);
 
         ListaEncadeada<String> lista = new ListaEncadeada<>();
-/*        String[] alfabeto = {
-            "A", "B", "C", "D", "E", "F", "G",
-            "H", "I", "J", "K", "L", "M", "N",
-            "O", "P", "Q", "R", "S", "T", "U",
-            "V", "W", "X", "Y", "Z"
-        };
-        for (String letra : alfabeto) {
-            No<String> letraDoAlfabeto = new No<String>(letra);
-            lista.adicionarNo(letraDoAlfabeto);
-        }
-*/
+
         while(opcao != 0) {
             System.out.println("\nMenu:");
             System.out.println("0 - Sair");
