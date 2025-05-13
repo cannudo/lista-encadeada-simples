@@ -61,6 +61,10 @@ public class ListaEncadeada<TipoGenerico> {
         return !this.temCabeca() && !this.temCauda();
     }
 
+    public boolean aListaTemUmUnicoNo() {
+        return (this.getCabeca() == this.getCauda()) && this.getTamanho() == 1;
+    }
+
     public int indiceDaCauda() {
         return this.getTamanho() - 1;
     }
@@ -73,7 +77,7 @@ public class ListaEncadeada<TipoGenerico> {
         return no == this.cauda;
     }
 
-    public void adicionarNo(No<TipoGenerico> novoNo) {
+    public void adicionarNoAoFimDaLista(No<TipoGenerico> novoNo) {
         if(this.estaVazia()) {
             this.setCabeca(novoNo);
             this.setCauda(novoNo);
@@ -143,6 +147,23 @@ public class ListaEncadeada<TipoGenerico> {
         }
     }
 
+    public No<TipoGenerico> removerNoDoInicio() {
+        No<TipoGenerico> noRemovido = null;
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("Deixa de ser maluca, garota. Tá vazia essa lista. Tú quer remover que diaxo de nó aqui que não tem?");
+        } else {
+            noRemovido = this.getCabeca();
+            if(this.aListaTemUmUnicoNo()) {
+                this.zerarLista();
+           } else {
+                No<TipoGenerico> novaCabeca = this.getCabeca().getProximoNo();
+                this.setCabeca(novaCabeca);
+                this.decrementarTamanho();
+           }
+        }
+        return noRemovido;
+    }
+
     public boolean oIndiceEstaDentroDosLimites(int indice) {
         return indice >= 0 && indice <= this.getTamanho() - 1;
     }
@@ -205,10 +226,11 @@ public class ListaEncadeada<TipoGenerico> {
             System.out.println("\nMenu:");
             System.out.println("0 - Sair");
             System.out.println("1 - Listar nós");
-            System.out.println("2 - Adicionar nó");
+            System.out.println("2 - Adicionar nó ao fim da lista");
             System.out.println("3 - Buscar nó pelo índice");
             System.out.println("4 - Remover último nó");
             System.out.println("5 - Adicionar nó ao início");
+            System.out.println("6 - Remover nó do início");
             System.out.print("--> ");
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -222,7 +244,7 @@ public class ListaEncadeada<TipoGenerico> {
                     System.out.print("Digite um dado string: ");
                     dado = leitor.nextLine();
                     No<String> novoNo = new No<String>(dado);
-                    lista.adicionarNo(novoNo);
+                    lista.adicionarNoAoFimDaLista(novoNo);
                     break;
                 case 3:
                     if(lista.estaVazia()) {
@@ -251,6 +273,13 @@ public class ListaEncadeada<TipoGenerico> {
                     dado = leitor.nextLine();
                     No<String> novoNoGambiarra = new No<String>(dado);
                     lista.adicionarNoAoInicio(novoNoGambiarra);
+                    break;
+                case 6:
+                    try {
+                        System.out.println("Nó removido: " + lista.removerNoDoInicio());
+                    } catch (ListaVaziaException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 default:
                     break;
