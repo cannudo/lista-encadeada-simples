@@ -37,6 +37,27 @@ public class ListaEncadeada<TipoGenerico> {
         this.cauda = novaCauda;
     }
 
+    public int indiceDoNoAnterior(TipoGenerico chave) {
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("Vaziazinha");
+        }
+        if(this.aListaTemUmUnicoNo()) {
+            throw new ListaDeUnicoNoException("A lista só tem um nó. Não há indice anterior."); 
+        }
+        int retorno = 0;
+        No<TipoGenerico> noArbritario = new No();
+        for(int i = 0; i <= this.indiceDaCauda(); i++) {
+            noArbritario = this.buscarNoNoIndice(i);
+            if(noArbritario.getProximoNo().getDado() == chave && noArbritario.getProximoNo().getDado() != null) {
+                return i;
+            } else {
+                retorno = -1;
+                break;
+            }
+        }
+        return retorno;
+    }
+
     public ListaEncadeada<TipoGenerico> clone() {
         ListaEncadeada<TipoGenerico> retorno = new ListaEncadeada<>();
         No<TipoGenerico>[] array = (No<TipoGenerico>[]) new No[this.getTamanho()];
@@ -122,6 +143,27 @@ public class ListaEncadeada<TipoGenerico> {
         }
         this.setCabeca(novaCabeca);
         this.incrementarTamanho();
+    }
+
+    public No<TipoGenerico> getNoAnterior(TipoGenerico chave) {
+        if(this.estaVazia()) {
+            throw new ListaVaziaException("Vaziazinha");
+        }
+        if(this.aListaTemUmUnicoNo()) {
+            throw new ListaDeUnicoNoException("Só existe um nó aqui. Não há nó anterior");
+        }
+
+        No<TipoGenerico> noAtual = this.getCabeca();
+        No<TipoGenerico> proximoNo = noAtual.getProximoNo();
+        while(proximoNo != null) {
+            if(proximoNo.getDado().equals(chave)) {
+                noAtual.setProximoNo(proximoNo.getProximoNo());
+                return noAtual;
+            }
+            noAtual = proximoNo;
+            proximoNo = noAtual.getProximoNo();
+        }
+        return null;
     }
 
     public No<TipoGenerico> removerNoNoIndice(int indice) {
@@ -249,6 +291,7 @@ public class ListaEncadeada<TipoGenerico> {
             System.out.println("5 - Adicionar nó ao início");
             System.out.println("6 - Remover nó do início");
             System.out.println("7 - Clonar lista");
+            System.out.println("8 - Remover dado");
             System.out.print("--> ");
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -301,6 +344,11 @@ public class ListaEncadeada<TipoGenerico> {
                     break;
                 case 7:
                     System.out.println("Original: " + lista.toString() + "\nClone: " + lista.clone());
+                    break;
+                case 8:
+                    System.out.print("Digite um dado string: ");
+                    dado = leitor.nextLine();
+                    System.out.println(lista.getNoAnterior(dado)); // em construção
                     break;
                 default:
                     break;
