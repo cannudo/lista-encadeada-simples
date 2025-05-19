@@ -37,6 +37,29 @@ public class ListaEncadeada<TipoGenerico> {
         this.cauda = novaCauda;
     }
 
+    public ListaEncadeada<TipoGenerico> clone() {
+        ListaEncadeada<TipoGenerico> retorno = new ListaEncadeada<>();
+        No<TipoGenerico>[] array = (No<TipoGenerico>[]) new No[this.getTamanho()];
+        No<TipoGenerico> noArbritario = new No();
+        if(this.estaVazia()) {
+            return retorno;
+        }
+        if(this.aListaTemUmUnicoNo()) {
+            retorno.adicionarNoAoInicio(this.getCabeca());
+            return retorno;
+        }
+        for(int i = 0; i <= this.indiceDaCauda(); i++) {
+            noArbritario = this.buscarNoNoIndice(i);
+            array[i] = noArbritario;
+        }
+        noArbritario = new No();
+        for(int j = 0; j <= this.indiceDaCauda(); j++)  {
+            noArbritario = array[j];
+            retorno.adicionarNoAoFimDaLista(noArbritario);
+        }
+        return retorno;
+    }
+
     public int getTamanho() {
         return this.tamanho;
     }
@@ -225,6 +248,7 @@ public class ListaEncadeada<TipoGenerico> {
             System.out.println("4 - Remover último nó");
             System.out.println("5 - Adicionar nó ao início");
             System.out.println("6 - Remover nó do início");
+            System.out.println("7 - Clonar lista");
             System.out.print("--> ");
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -274,6 +298,9 @@ public class ListaEncadeada<TipoGenerico> {
                     } catch (ListaVaziaException e) {
                         System.err.println(e.getMessage());
                     }
+                    break;
+                case 7:
+                    System.out.println("Original: " + lista.toString() + "\nClone: " + lista.clone());
                     break;
                 default:
                     break;

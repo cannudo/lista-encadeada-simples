@@ -2,6 +2,11 @@ public class No<TipoGenerico> {
     private TipoGenerico dado;
     private No<TipoGenerico> proximoNo;
 
+    public No() {
+        this.dado = null;
+        this.proximoNo = null;
+    }
+    
     public No(TipoGenerico dado) {
         this.dado = dado;
         this.proximoNo = null;
